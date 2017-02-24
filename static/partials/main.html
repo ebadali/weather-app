@@ -1,0 +1,68 @@
+ <md-content laout="column" flex >
+      
+      <md-card>
+        <div layout="row" layout-wrap class="checkboxes">
+<!--  --> 
+        </div>
+
+      </md-card>
+      
+      <md-card>
+    <div class="card-tabs">      
+    
+    </div>
+        <md-toolbar class="md-table-toolbar md-default" ng-hide="options.rowSelection && selected.length">
+          <br />
+          <div class="md-toolbar-tools">
+            <span>Report</span>
+            <div flex></div>
+              <span>{{city}}</span>
+              <span>, {{country}}</span>
+            <div flex></div>
+                                   
+            <div >
+              <div class="input-field row">
+                <input ng-model="cityquery" id="searchquery" type="text" class="validate">
+                <label for="searchquery">Search</label>
+              </div>
+            </div>
+
+            <md-button class="md-icon-button" ng-click="loadStuff()">
+              <md-icon>refresh</md-icon>
+            </md-button>
+          </div>
+        </md-toolbar>
+        
+        <md-table-container>
+          <table md-table md-row-select="options.rowSelection"  ng-model="selected" md-progress="promise">
+            <thead ng-if="!options.decapitate" md-head md-order="query.order" md-on-reorder="logOrder">
+              <tr md-row>
+                <th md-column md-order-by="day"><span>Day</span></th>
+
+                <th md-column md-order-by="date"><span>Date</span></th>
+                <th md-column md-numeric md-order-by="weather.temp" md-desc><span>Temperature (K)</span></th>
+                <th md-column md-numeric md-order-by="weather.sky"><span>Sky Condition</span></th>
+                <th md-column md-numeric md-order-by="weather.humid"><span>Humidity</span></th>
+              </tr>
+            </thead>
+            <tbody md-body>
+              <tr md-row md-select="weather" md-on-select="logItem" md-auto-select="options.autoSelect"  ng-repeat="weather in weatherForecastor.data | filter: filter.search | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
+                <td md-cell>{{weather.day}}</td>                
+
+                <td md-cell>{{weather.date}}</td>                
+                <td md-cell>{{weather.weather.temp}}</td>
+                <td md-cell>{{weather.weather.clddes}}</td>
+                <td md-cell>{{weather.weather.humd}}</td>                
+              </tr>
+            </tbody>
+          </table>
+        </md-table-container>
+
+        <md-table-pagination md-limit="query.limit" md-limit-options="limitOptions" md-page="query.page" md-total="{{weatherForecastor.count}}" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="logPagination"></md-table-pagination>
+      
+      <br>
+      <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons" ng-click="saveData()">add</i></a>
+      <br>
+      </md-card>
+
+    </md-content>
