@@ -90,6 +90,7 @@ var myApp = angular.module('myApp', ['ngRoute','ngCookies','ngMaterial', 'md.dat
 
 
     if (filename.length > 4) {
+
         // Convert data (forecaster) to text.
         var blob = new Blob([buildData()], {type: "text/plain;charset=utf-8"});
         saveAs(blob, filename);  
@@ -223,16 +224,18 @@ function parseWeatherData(data){
    location = {city: city , country: country};
 
     if (data['cnt'])
-      count = data['cnt'] / 5;
+      count = Math.floor(data['cnt'] / 5);
+            // console.log(count);
 
     var list = []
     if(data['list'])
       list = data['list']
-    for (var i = 0 ; i < list.length ; i += count ) {
+    for (var i = 0 ; i < list.length; i += count ) {
       // Skipping count amount of forecaast, as api gives 
       // count forecast of a single day.
+      // console.log(i);
+
       var wthr = getDescriptor(list[i]);
-        // console.log(list[i]);
 
       model.push({day: getDay(list[i].dt_txt), dt: list[i].dt, date: list[i].dt_txt, weather : wthr});
     }
@@ -246,6 +249,9 @@ function getDescriptor(data){
   humidity = "No info";
   var clouds = "No info"; 
   var cloudsDes = "No info";
+
+  // console.log(data);
+
   if(data['main'] ){
     if(data['main'].temp ) {
       temp = data['main'].temp;
