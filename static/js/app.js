@@ -131,7 +131,7 @@ var myApp = angular.module('myApp', ['ngRoute','ngCookies','ngMaterial', 'md.dat
     $scope.previousQuery  = query;
     $http({
         method:'GET',
-        url:'http://api.openweathermap.org/data/2.5/forecast?q='+query+'&appid=f08af293952634512b15b3ab0d69e878',
+        url:'//api.openweathermap.org/data/2.5/forecast?q='+query+'&appid=f08af293952634512b15b3ab0d69e878',
         headers: {
            'Content-Type': 'application/json;charset=utf-8'
         }
