@@ -7,7 +7,6 @@ from datetime import datetime
 
 
 app = Flask(__name__)
-CORS(app)
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 @app.route("/")
